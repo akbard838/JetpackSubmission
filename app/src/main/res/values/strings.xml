@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">JetpackSubmission</string>
+    <string name="label_movies">Movies</string>
+    <string name="label_tv_shows">Tv Shows</string>
+    <string name="message_please_wait">Please Wait</string>
+    <string name="label_genre">Genre</string>
+    <string name="label_separator">|</string>
+    <string name="label_rating">Rating</string>
+    <string name="label_overview">Overview</string>
+    <string name="format_rating">%s/10</string>
 </resources>

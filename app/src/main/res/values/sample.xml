@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sample_title">Basudara The Rejection</string>
+    <string name="sample_year">1999</string>
+    <string name="sample_rating">7.8</string>
+    <string name="sample_genre">Mystery, Comedy, Action</string>
+    <string name="sample_overview">After the devastating events of Avengers: Infinity War (2018), the universe is in ruins. With the help of remaining allies, the Avengers assemble once more in order to reverse Thanos\' actions and restore balance to the universe.</string>
+</resources>
