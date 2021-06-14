@@ -1,13 +1,17 @@
 package com.dicoding.jetpacksubmission.presentation.tvshow
 
 import android.os.Bundle
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dicoding.jetpacksubmission.R
 import com.dicoding.jetpacksubmission.base.BaseFragment
-import com.dicoding.jetpacksubmission.data.Content
+import com.dicoding.jetpacksubmission.data.model.Content
+import com.dicoding.jetpacksubmission.presentation.ViewModelFactory
 import com.dicoding.jetpacksubmission.presentation.adapter.ContentAdapter
 import com.dicoding.jetpacksubmission.presentation.detail.DetailContentActivity
 import com.dicoding.jetpacksubmission.utils.enum.ContentType
+import com.dicoding.jetpacksubmission.utils.showToast
 import kotlinx.android.synthetic.main.fragment_tv_show.*
 
 class TvShowFragment: BaseFragment(), ContentAdapter.OnContentItemListener {
@@ -38,19 +42,24 @@ class TvShowFragment: BaseFragment(), ContentAdapter.OnContentItemListener {
     }
 
     override fun setupProcess() {
-        tvShowViewModel = TvShowViewModel()
 
-        initTvShowData()
     }
 
     override fun setupObservable() {
+        activity?.let {
+            tvShowViewModel = ViewModelProvider(
+                it,
+                ViewModelFactory.getInstance()
+            )[TvShowViewModel::class.java]
+        }
 
-    }
-
-    private fun initTvShowData() {
-        val tvShows = tvShowViewModel.getTvShows()
-
-        contentAdapter.setData(tvShows)
+        tvShowViewModel.getTvShows().observe(viewLifecycleOwner, Observer { tvShows ->
+            if (tvShows != null) {
+                contentAdapter.setData(tvShows)
+            } else {
+                showToast("Oops, something error!")
+            }
+        })
     }
 
     private fun initRecyclerView() {

@@ -1,13 +1,17 @@
 package com.dicoding.jetpacksubmission.presentation.movie
 
 import android.os.Bundle
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dicoding.jetpacksubmission.R
 import com.dicoding.jetpacksubmission.base.BaseFragment
-import com.dicoding.jetpacksubmission.data.Content
+import com.dicoding.jetpacksubmission.data.model.Content
+import com.dicoding.jetpacksubmission.presentation.ViewModelFactory
 import com.dicoding.jetpacksubmission.presentation.adapter.ContentAdapter
 import com.dicoding.jetpacksubmission.presentation.detail.DetailContentActivity
 import com.dicoding.jetpacksubmission.utils.enum.ContentType
+import com.dicoding.jetpacksubmission.utils.showToast
 import kotlinx.android.synthetic.main.fragment_movie.*
 
 class MovieFragment : BaseFragment(), ContentAdapter.OnContentItemListener {
@@ -34,22 +38,28 @@ class MovieFragment : BaseFragment(), ContentAdapter.OnContentItemListener {
     }
 
     override fun setupAction() {
+
     }
 
     override fun setupProcess() {
-        movieViewModel = MovieViewModel()
 
-        initMovieData()
     }
 
     override fun setupObservable() {
+        activity?.let {
+            movieViewModel = ViewModelProvider(
+                it,
+                ViewModelFactory.getInstance()
+            )[MovieViewModel::class.java]
+        }
 
-    }
-
-    private fun initMovieData() {
-        val movies = movieViewModel.getMovies()
-
-        contentAdapter.setData(movies)
+        movieViewModel.getMovies().observe(viewLifecycleOwner, Observer { movies ->
+            if (movies != null) {
+                contentAdapter.setData(movies)
+            } else {
+                showToast("Oops, something error!")
+            }
+        })
     }
 
     private fun initRecyclerView() {

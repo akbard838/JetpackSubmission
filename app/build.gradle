@@ -16,6 +16,10 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        //API
+        buildConfigField("String", "API_KEY", '"d9348f08efbc7a1851494d46e62f087a"')
+        buildConfigField("String", "BASE_URL", '"https://api.themoviedb.org/3/"')
     }
 
     buildTypes {
@@ -56,5 +60,15 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     androidTestImplementation "androidx.test.espresso:espresso-contrib:3.3.0"
+
+    //Retrofit
+    implementation "com.squareup.retrofit2:retrofit:2.9.0"
+    implementation "com.squareup.retrofit2:converter-gson:2.9.0"
+
+    //Mockito
+    testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:2.1.0"
+
+    //Idling Resource
+    implementation "androidx.test.espresso:espresso-idling-resource:3.3.0"
 
 }

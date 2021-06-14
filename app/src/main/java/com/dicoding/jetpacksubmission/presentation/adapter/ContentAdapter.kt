@@ -4,9 +4,8 @@ import android.content.Context
 import androidx.recyclerview.widget.RecyclerView
 import com.dicoding.jetpacksubmission.R
 import com.dicoding.jetpacksubmission.base.BaseRecycleViewAdapter
-import com.dicoding.jetpacksubmission.data.Content
-import com.dicoding.jetpacksubmission.utils.onClick
-import com.dicoding.jetpacksubmission.utils.setImageResource
+import com.dicoding.jetpacksubmission.data.model.Content
+import com.dicoding.jetpacksubmission.utils.*
 import kotlinx.android.synthetic.main.item_content.view.*
 
 class ContentAdapter(
@@ -20,11 +19,16 @@ class ContentAdapter(
     override fun bindView(holder: RecyclerView.ViewHolder, data: Content, position: Int) {
         with(holder.itemView){
             tvTitle.text = data.title
-            tvYear.text = data.year
+            tvYear.text = data.year.changeDateFormat("YYYY-MM-DD", "YYYY")
             tvOverview.text = data.overview
             tvRating.text =
                 String.format(context.getString(R.string.format_rating), data.rating.toString())
-            imgPoster.setImageResource(context, data.poster)
+            imgPoster.setImagePath(
+                context,
+                POSTER_ENDPOINT + POSTER_SIZE_ENDPOINT_W185 + data.poster,
+                pbImgPoster,
+                R.drawable.ic_broken_image
+            )
 
             this.onClick {
                 listener?.onContentItemClicked(data)
