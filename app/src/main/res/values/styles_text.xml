@@ -8,6 +8,19 @@
         <item name="android:gravity">center_horizontal</item>
     </style>
 
+    <style name="JetpackAndroidTextButton" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:fontFamily">@font/poppins_medium</item>
+        <item name="android:paddingLeft">0dp</item>
+        <item name="android:paddingRight">0dp</item>
+        <item name="android:paddingTop">0dp</item>
+        <item name="android:paddingBottom">0dp</item>
+        <item name="android:minHeight">0dp</item>
+        <item name="android:minWidth">0dp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+    </style>
+
     <style name="JetpackAndroidText">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -19,8 +32,24 @@
         <item name="android:fontFamily">@font/poppins_bold</item>
     </style>
 
+    <style name="JetpackAndroidText.Medium">
+        <item name="android:fontFamily">@font/poppins_medium</item>
+    </style>
+
     <style name="JetpackAndroidText.Bold.White">
         <item name="android:textColor">@color/colorWhite</item>
+    </style>
+
+    <style name="JetpackAndroidText.Medium.White">
+        <item name="android:textColor">@color/colorWhite</item>
+    </style>
+
+    <style name="JetpackAndroidTextButton.White">
+        <item name="android:textColor">@color/colorWhite</item>
+    </style>
+
+    <style name="JetpackAndroidTextButton.Red">
+        <item name="android:textColor">@color/colorRed</item>
     </style>
 
     <style name="JetpackAndroidText.White">

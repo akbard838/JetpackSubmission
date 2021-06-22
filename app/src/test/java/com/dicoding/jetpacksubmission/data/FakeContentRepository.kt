@@ -9,17 +9,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 
-class ContentRepository private constructor(private val remoteDataSource: RemoteDataSource) : ContentDataSource {
-
-    companion object {
-        @Volatile
-        private var instance: ContentRepository? = null
-
-        fun getInstance(remoteDataSource: RemoteDataSource): ContentRepository =
-            instance ?: synchronized(this) {
-                instance ?: ContentRepository(remoteDataSource)
-            }
-    }
+class FakeContentRepository(private val remoteDataSource: RemoteDataSource) : ContentDataSource {
 
     override fun getMovies(): LiveData<List<Content>> {
         val moviesResult = MutableLiveData<List<Content>>()
@@ -114,5 +104,4 @@ class ContentRepository private constructor(private val remoteDataSource: Remote
         }
         return tvShowResult
     }
-
 }

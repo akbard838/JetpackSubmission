@@ -60,17 +60,52 @@ class DetailContentActivity : BaseActivity() {
             movieViewModel =
                 ViewModelProvider(this, ViewModelFactory.getInstance())[MovieViewModel::class.java]
 
-            movieViewModel.getDetailMovie(contentId).observe(this, Observer { movie ->
-                initDetailContentUI(movie)
-            })
+            getMovieData()
+
         } else {
             tvShowViewModel =
                 ViewModelProvider(this, ViewModelFactory.getInstance())[TvShowViewModel::class.java]
 
-            tvShowViewModel.getDetailTvShow(contentId).observe(this, Observer {tvShow ->
-                initDetailContentUI(tvShow)
-            })
+            getTvShowData()
         }
+    }
+
+    private fun getTvShowData() {
+        tvShowViewModel.getDetailTvShow(contentId).observe(this, Observer { tvShow ->
+            if (tvShow != null) {
+                initDetailContentUI(tvShow)
+            } else {
+                showCancelableAlertDialog(
+                    context = this,
+                    title = getString(R.string.title_error),
+                    message = getString(R.string.message_error),
+                    positive = getString(R.string.action_retry),
+                    positiveListener = {
+                        getTvShowData()
+                    },
+                    negative = getString(R.string.action_cancel)
+                )
+            }
+        })
+    }
+
+    private fun getMovieData() {
+        movieViewModel.getDetailMovie(contentId).observe(this, Observer { movie ->
+            if (movie != null) {
+                initDetailContentUI(movie)
+            } else {
+                showCancelableAlertDialog(
+                    context = this,
+                    title = getString(R.string.title_error),
+                    message = getString(R.string.message_error),
+                    positive = getString(R.string.action_retry),
+                    positiveListener = {
+                        getMovieData()
+                    },
+                    negative = getString(R.string.action_cancel)
+                )
+            }
+        })
     }
 
     private fun initDetailContentUI(content: Content) {
@@ -94,7 +129,7 @@ class DetailContentActivity : BaseActivity() {
         )
     }
 
-    private fun getGenresContent(content: Content): String{
+    private fun getGenresContent(content: Content): String {
         val genreNames = arrayListOf<String>()
         content.genre.map { genreNames.add(it.genreName.trim()) }
 

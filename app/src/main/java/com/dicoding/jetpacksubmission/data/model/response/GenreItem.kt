@@ -5,12 +5,12 @@ import com.google.gson.annotations.SerializedName
 
 data class GenreItem(
     @SerializedName("id")
-    val id: Int,
+    val id: Int?,
 
     @SerializedName("name")
     val genreName: String?
 ) {
     fun toContentGenre(): ContentGenre {
-        return ContentGenre(id, genreName.orEmpty())
+        return ContentGenre(id ?: 0, genreName.orEmpty())
     }
 }

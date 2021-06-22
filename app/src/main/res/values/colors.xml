@@ -10,5 +10,6 @@
     <color name="colorBlackTwo">#292929</color>
     <color name="colorWhiteTwo">#eeeeee</color>
     <color name="colorWhite">#FFFFFFFF</color>
+    <color name="colorRed">#EC2929</color>
     <color name="colorBlack20">#9E000000</color>
 </resources>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/bg_alert_dialog"
+    android:orientation="vertical"
+    android:gravity="center">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvTitle"
+        style="@style/JetpackAndroidText.Medium.White"
+        android:textSize="@dimen/text_size_16sp"
+        android:gravity="center"
+        android:textAlignment="center"
+        android:layout_marginTop="@dimen/dimen_4dp"
+        android:layout_marginLeft="@dimen/dimen_24dp"
+        android:layout_marginRight="@dimen/dimen_24dp"
+        android:layout_weight="1"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvMessage"
+        style="@style/JetpackAndroidText.White"
+        android:textSize="@dimen/text_size_14sp"
+        android:layout_marginLeft="@dimen/dimen_24dp"
+        android:layout_marginRight="@dimen/dimen_24dp"
+        android:visibility="gone"
+        android:textAlignment="center"
+        android:layout_weight="1"/>
+
+    <LinearLayout
+        android:id="@+id/buttonContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="2"
+        android:layout_marginRight="@dimen/dimen_24dp"
+        android:layout_marginLeft="@dimen/dimen_24dp"
+        android:layout_marginBottom="@dimen/dimen_4dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_weight="1">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnCancel"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            style="@style/JetpackAndroidTextButton.White"
+            android:visibility="visible"
+            android:textSize="@dimen/text_size_12sp"
+            android:gravity="center"
+            android:textAlignment="center"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnAdd"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:visibility="visible"
+            style="@style/JetpackAndroidTextButton.Red"
+            android:textSize="@dimen/text_size_12sp"
+            android:gravity="center"
+            android:textAlignment="center"/>
+    </LinearLayout>
+</LinearLayout>

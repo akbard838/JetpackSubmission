@@ -1,8 +1,13 @@
 package com.dicoding.jetpacksubmission.utils
 
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
+import android.os.Build
 import android.view.View
 import android.widget.Toast
 import androidx.annotation.NonNull
+import androidx.annotation.RequiresApi
 import com.dicoding.jetpacksubmission.R
 import java.text.SimpleDateFormat
 import java.util.*
@@ -48,3 +53,13 @@ fun String.changeDateFormat(currentFormat: String, newFormat: String, locale: Lo
         ContextProvider.get().getString(R.string.label_dash)
     }
 }
+
+@RequiresApi(Build.VERSION_CODES.M)
+fun isNetworkAvailable(context: Context) =
+    (context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager).run {
+        getNetworkCapabilities(activeNetwork)?.run {
+            hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)
+                || hasTransport(NetworkCapabilities.TRANSPORT_WIFI)
+                || hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)
+        } ?: false
+    }

@@ -9,4 +9,8 @@
     <string name="label_overview">Overview</string>
     <string name="format_rating">%s/10</string>
     <string name="label_dash">-</string>
+    <string name="title_error">Oops, something error!</string>
+    <string name="message_error">Sorry, there is a problem when load the content details</string>
+    <string name="action_retry">Retry</string>
+    <string name="action_cancel">Cancel</string>
 </resources>
