@@ -22,10 +22,7 @@ data class TvShowItem(
     val voteAverage: Double?,
 
     @SerializedName("poster_path")
-    val posterPath: String?,
-
-    @SerializedName("genres")
-    val genres: List<GenreItem>?
+    val posterPath: String?
 ) {
     fun toContent(): Content {
         return Content(
@@ -34,8 +31,7 @@ data class TvShowItem(
             poster = posterPath.orEmpty(),
             overview = overview.orEmpty(),
             year = releaseDate.orEmpty(),
-            rating = voteAverage ?: 0.0,
-            genre = genres?.map { it.toContentGenre() } ?: listOf()
+            rating = voteAverage ?: 0.0
         )
     }
 
@@ -46,8 +42,7 @@ data class TvShowItem(
             poster = posterPath.orEmpty(),
             overview = overview.orEmpty(),
             year = releaseDate.orEmpty(),
-            rating = voteAverage ?: 0.0,
-            genre = genres?.map { it.toContentGenre() } ?: listOf()
+            rating = voteAverage ?: 0.0
         )
     }
 }

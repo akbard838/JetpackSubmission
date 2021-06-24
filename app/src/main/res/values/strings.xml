@@ -17,4 +17,5 @@
     <string name="action_cancel">Cancel</string>
     <string name="description_favorite_button">favorite button</string>
     <string name="title_my_favorite">My Favorite</string>
+    <string name="label_my_favorite">My Favorite</string>
 </resources>

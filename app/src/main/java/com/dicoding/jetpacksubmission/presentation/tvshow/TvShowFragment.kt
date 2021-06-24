@@ -51,7 +51,7 @@ class TvShowFragment : BaseFragment(), TvShowAdapter.OnTvShowItemListener {
 
     override fun setupObservable() {
         val factory = ViewModelFactory2.getInstance(requireActivity())
-        tvShowViewModel = ViewModelProvider(this, factory)[tvShowViewModel::class.java]
+        tvShowViewModel = ViewModelProvider(this, factory)[TvShowViewModel::class.java]
 
         getTvShowsData()
     }

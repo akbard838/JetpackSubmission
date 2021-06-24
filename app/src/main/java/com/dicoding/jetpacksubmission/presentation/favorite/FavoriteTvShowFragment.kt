@@ -12,6 +12,8 @@ import com.dicoding.jetpacksubmission.presentation.adapter.TvShowAdapter
 import com.dicoding.jetpacksubmission.presentation.detail.DetailContentActivity
 import com.dicoding.jetpacksubmission.presentation.tvshow.TvShowViewModel
 import com.dicoding.jetpacksubmission.utils.enum.ContentType
+import com.dicoding.jetpacksubmission.utils.gone
+import com.dicoding.jetpacksubmission.utils.visible
 import kotlinx.android.synthetic.main.fragment_tv_show.*
 
 class FavoriteTvShowFragment : BaseFragment(), TvShowAdapter.OnTvShowItemListener {
@@ -34,6 +36,7 @@ class FavoriteTvShowFragment : BaseFragment(), TvShowAdapter.OnTvShowItemListene
     }
 
     override fun setupUI() {
+        pbTvShow.visible()
         initRecyclerView()
     }
 
@@ -47,9 +50,10 @@ class FavoriteTvShowFragment : BaseFragment(), TvShowAdapter.OnTvShowItemListene
 
     override fun setupObservable() {
         val factory = ViewModelFactory2.getInstance(requireActivity())
-        tvShowViewModel = ViewModelProvider(this, factory)[tvShowViewModel::class.java]
+        tvShowViewModel = ViewModelProvider(this, factory)[TvShowViewModel::class.java]
 
         tvShowViewModel.getFavoriteTvShows().observe(this, Observer { tvShows ->
+            pbTvShow.gone()
             tvShowAdapter.submitList(tvShows)
             tvShowAdapter.notifyDataSetChanged()
         })

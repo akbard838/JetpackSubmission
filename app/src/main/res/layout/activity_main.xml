@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -11,11 +11,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorBlackTwo"
-        app:tabTextColor="@color/colorLightGrey"
-        app:tabSelectedTextColor="@color/colorWhite"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:tabSelectedTextColor="@color/colorWhite"
+        app:tabTextColor="@color/colorLightGrey">
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
@@ -32,6 +32,42 @@
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/vpHome"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="@dimen/dimen_0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tlHome" />
 
-</LinearLayout>
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/btnMyFavorite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/dimen_24dp"
+        android:layout_marginBottom="@dimen/dimen_24dp"
+        app:cardBackgroundColor="@color/colorBlackTwo"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:cardCornerRadius="@dimen/dimen_12dp"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dimen_12dp">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="@dimen/dimen_12dp"
+                android:src="@drawable/ic_favorite" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/JetpackAndroidText.Bold.White"
+                android:layout_width="wrap_content"
+                android:textSize="@dimen/text_size_18sp"
+                android:layout_height="wrap_content"
+                android:text="@string/label_my_favorite" />
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

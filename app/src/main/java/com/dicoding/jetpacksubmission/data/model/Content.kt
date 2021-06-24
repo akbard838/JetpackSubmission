@@ -11,6 +11,5 @@ data class Content(
     val poster: String,
     val overview: String,
     val year: String,
-    val rating: Double,
-    val genre: List<GenreItem>
+    val rating: Double
 ) : Parcelable

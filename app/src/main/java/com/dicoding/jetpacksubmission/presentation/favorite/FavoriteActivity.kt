@@ -2,11 +2,10 @@ package com.dicoding.jetpacksubmission.presentation.favorite
 
 import android.content.Context
 import android.content.Intent
+import android.view.MenuItem
 import com.dicoding.jetpacksubmission.R
 import com.dicoding.jetpacksubmission.base.BaseActivity
-import com.dicoding.jetpacksubmission.base.BaseFragment
 import com.dicoding.jetpacksubmission.base.BasePagerAdapter
-import com.dicoding.jetpacksubmission.utils.emptyString
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.activity_favorite.*
 import kotlinx.android.synthetic.main.layout_toolbar.*
@@ -55,5 +54,10 @@ class FavoriteActivity : BaseActivity() {
         TabLayoutMediator(tlFavorite, vpFavorite){ tab, position ->
             tab.text = tabTitle[position]
         }.attach()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == android.R.id.home) onBackPressed()
+        return super.onOptionsItemSelected(item)
     }
 }

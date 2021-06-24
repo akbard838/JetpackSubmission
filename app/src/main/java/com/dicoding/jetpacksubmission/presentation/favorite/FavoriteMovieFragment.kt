@@ -12,6 +12,8 @@ import com.dicoding.jetpacksubmission.presentation.adapter.MovieAdapter
 import com.dicoding.jetpacksubmission.presentation.detail.DetailContentActivity
 import com.dicoding.jetpacksubmission.presentation.movie.MovieViewModel
 import com.dicoding.jetpacksubmission.utils.enum.ContentType
+import com.dicoding.jetpacksubmission.utils.gone
+import com.dicoding.jetpacksubmission.utils.visible
 import kotlinx.android.synthetic.main.fragment_movie.*
 
 class FavoriteMovieFragment : BaseFragment(), MovieAdapter.OnMovieItemListener {
@@ -34,6 +36,7 @@ class FavoriteMovieFragment : BaseFragment(), MovieAdapter.OnMovieItemListener {
     }
 
     override fun setupUI() {
+        pbMovie.visible()
         initRecyclerView()
     }
 
@@ -50,6 +53,7 @@ class FavoriteMovieFragment : BaseFragment(), MovieAdapter.OnMovieItemListener {
         movieViewModel = ViewModelProvider(this, factory)[MovieViewModel::class.java]
 
         movieViewModel.getFavoriteMovies().observe(this, Observer { movies ->
+            pbMovie.gone()
             movieAdapter.submitList(movies)
             movieAdapter.notifyDataSetChanged()
         })

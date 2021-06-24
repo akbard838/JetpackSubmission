@@ -9,8 +9,7 @@ data class MovieItem(
     val releaseDate: String?,
     val posterPath: String?,
     val overview: String?,
-    val voteAverage: Double?,
-    val genres: List<GenreItem>?
+    val voteAverage: Double?
 ) {
     fun toContent(): Content {
         return Content(
@@ -19,8 +18,7 @@ data class MovieItem(
             poster = posterPath.orEmpty(),
             overview = overview.orEmpty(),
             year = releaseDate.orEmpty(),
-            rating = voteAverage ?: 0.0,
-            genre = genres?.map { it.toContentGenre() } ?: listOf()
+            rating = voteAverage ?: 0.0
         )
     }
 
@@ -31,8 +29,7 @@ data class MovieItem(
             poster = posterPath.orEmpty(),
             overview = overview.orEmpty(),
             year = releaseDate.orEmpty(),
-            rating = voteAverage ?: 0.0,
-            genre = genres?.map { it.toContentGenre() } ?: listOf()
+            rating = voteAverage ?: 0.0
         )
     }
 }

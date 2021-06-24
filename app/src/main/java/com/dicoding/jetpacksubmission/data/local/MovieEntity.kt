@@ -15,7 +15,6 @@ data class MovieEntity(
     val overview: String? = emptyString(),
     val year: String? = emptyString(),
     val rating: Double? = 0.0,
-    val genre: List<GenreEntity>? = listOf(),
     var isFavorite: Boolean = false
 ) {
     fun toContent(): Content {
@@ -25,8 +24,7 @@ data class MovieEntity(
             poster = poster.orEmpty(),
             overview = overview.orEmpty(),
             year = year.orEmpty(),
-            rating = rating ?: 0.0,
-            genre = genre?.map { it.toGenre() } ?: listOf()
+            rating = rating ?: 0.0
         )
     }
 }

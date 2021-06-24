@@ -13,6 +13,7 @@
         android:minHeight="?attr/actionBarSize"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:titleTextColor="@color/colorWhite"
         app:navigationIcon="@drawable/ic_back_white"
         app:titleTextAppearance="@style/JetpackAndroidToolbarTitleText" />
 

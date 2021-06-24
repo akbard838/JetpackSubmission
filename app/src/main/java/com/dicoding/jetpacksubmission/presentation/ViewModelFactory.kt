@@ -1,5 +1,6 @@
 package com.dicoding.jetpacksubmission.presentation
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.dicoding.jetpacksubmission.data.ContentRepository2
@@ -13,7 +14,7 @@ class ViewModelFactory private constructor(private val contentRepository: Conten
         @Volatile
         private var instance: ViewModelFactory? = null
 
-        fun getInstance(): ViewModelFactory =
+        fun getInstance(context: Context): ViewModelFactory =
             instance ?: synchronized(this) {
                 ViewModelFactory(Injection.provideRepository(context)).apply {
                     instance = this

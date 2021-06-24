@@ -52,7 +52,8 @@ class DetailContentActivity : BaseActivity() {
 
     override fun initAction() {
         fabFavorite.onClick {
-            movieViewModel.setFavoriteMovie()
+            if (contentType == ContentType.MOVIE.type) movieViewModel.setFavoriteMovie()
+            else tvShowViewModel.setFavoriteTvShow()
         }
     }
 
@@ -63,7 +64,7 @@ class DetailContentActivity : BaseActivity() {
     override fun initObservable() {
         if (contentType == ContentType.MOVIE.type) {
             movieViewModel =
-                ViewModelProvider(this, ViewModelFactory.getInstance())[MovieViewModel::class.java]
+                ViewModelProvider(this, ViewModelFactory.getInstance(this))[MovieViewModel::class.java]
             getMovieData()
 
             movieViewModel.detailMovie.observe(this, Observer { movie ->
@@ -77,7 +78,7 @@ class DetailContentActivity : BaseActivity() {
                             movie.data?.let {
                                 fabFavorite.setColorFilter(
                                     if (it.isFavorite) resources.getColor(R.color.colorRed)
-                                    else resources.getColor(R.color.colorDarkGrey)
+                                    else resources.getColor(R.color.colorLightGrey)
                                 )
                             }
                         }
@@ -90,7 +91,7 @@ class DetailContentActivity : BaseActivity() {
             })
         } else {
             tvShowViewModel =
-                ViewModelProvider(this, ViewModelFactory.getInstance())[TvShowViewModel::class.java]
+                ViewModelProvider(this, ViewModelFactory.getInstance(this))[TvShowViewModel::class.java]
             getTvShowData()
 
             tvShowViewModel.detailTvShow.observe(this, Observer { movie ->
@@ -104,7 +105,7 @@ class DetailContentActivity : BaseActivity() {
                             movie.data?.let {
                                 fabFavorite.setColorFilter(
                                     if (it.isFavorite) resources.getColor(R.color.colorRed)
-                                    else resources.getColor(R.color.colorDarkGrey)
+                                    else resources.getColor(R.color.colorLightGrey)
                                 )
                             }
                         }
@@ -200,7 +201,6 @@ class DetailContentActivity : BaseActivity() {
         tvTitle.text = content.title
         tvYear.text = content.year.changeDateFormat("YYYY-MM-DD", "YYYY")
         tvOverview.text = content.overview
-        tvGenre.text = getGenresContent(content)
         tvRating.text = String.format(getString(R.string.format_rating), content.rating.toString())
         imgPosterDetail.tag = content.poster
         imgPosterDetailBackground.tag = content.poster
@@ -215,21 +215,6 @@ class DetailContentActivity : BaseActivity() {
             POSTER_ENDPOINT + POSTER_SIZE_ENDPOINT_W185 + content.poster,
             R.drawable.ic_broken_image
         )
-    }
-
-    private fun getGenresContent(content: Content): String {
-        val genreNames = arrayListOf<String>()
-        content.genre.map { genreNames.add(it.genreName.trim()) }
-
-        val genreNameStringBuilder = StringBuilder()
-        genreNames.forEachIndexed { i, genre ->
-            genreNameStringBuilder.append(genre)
-            if (i != genreNames.lastIndex) {
-                genreNameStringBuilder.append(", ")
-            }
-        }
-
-        return genreNameStringBuilder.toString()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

@@ -6,8 +6,10 @@ import com.dicoding.jetpacksubmission.base.BaseActivity
 import com.dicoding.jetpacksubmission.R
 import com.dicoding.jetpacksubmission.base.BaseFragment
 import com.dicoding.jetpacksubmission.base.BasePagerAdapter
+import com.dicoding.jetpacksubmission.presentation.favorite.FavoriteActivity
 import com.dicoding.jetpacksubmission.presentation.movie.MovieFragment
 import com.dicoding.jetpacksubmission.presentation.tvshow.TvShowFragment
+import com.dicoding.jetpacksubmission.utils.onClick
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -33,7 +35,9 @@ class MainActivity : BaseActivity() {
     }
 
     override fun initAction() {
-
+        btnMyFavorite.onClick {
+            FavoriteActivity.start(this)
+        }
     }
 
     override fun initProcess() {

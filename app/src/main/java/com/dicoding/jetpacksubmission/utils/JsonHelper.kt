@@ -24,21 +24,6 @@ class JsonHelper(private val context: Context) {
         }
     }
 
-    private fun JSONArray.toDataGenre(): ArrayList<GenreItem> {
-        val genres = arrayListOf<GenreItem>()
-
-        for (j in 0 until this.length()) {
-            val genre = this.getJSONObject(j)
-
-            val genreId = genre.getInt("id")
-            val genreName = genre.getString("genreName")
-
-            genres.add(GenreItem(genreId, genreName))
-        }
-
-        return genres
-    }
-
     fun getMovies(): List<MovieItem> {
         val movies = ArrayList<MovieItem>()
         try {
@@ -53,7 +38,6 @@ class JsonHelper(private val context: Context) {
                 val posterPath = movie.getString("posterPath")
                 val overview = movie.getString("overview")
                 val voteAverage = movie.getDouble("voteAverage")
-                val genres = movie.getJSONArray("genres")
 
                 val movieResponse = MovieItem(
                     id = id,
@@ -61,8 +45,7 @@ class JsonHelper(private val context: Context) {
                     releaseDate = releaseDate,
                     posterPath = posterPath,
                     overview = overview,
-                    voteAverage = voteAverage,
-                    genres = genres.toDataGenre()
+                    voteAverage = voteAverage
                 )
                 movies.add(movieResponse)
             }
@@ -86,7 +69,6 @@ class JsonHelper(private val context: Context) {
                 val posterPath = response.getString("posterPath")
                 val overview = response.getString("overview")
                 val voteAverage = response.getDouble("voteAverage")
-                val genres = response.getJSONArray("genres")
 
                 movie = MovieItem(
                     id = movieId,
@@ -94,8 +76,7 @@ class JsonHelper(private val context: Context) {
                     releaseDate = releaseDate,
                     posterPath = posterPath,
                     overview = overview,
-                    voteAverage = voteAverage,
-                    genres = genres.toDataGenre()
+                    voteAverage = voteAverage
                 )
             }
 
@@ -120,7 +101,6 @@ class JsonHelper(private val context: Context) {
                 val posterPath = tvShow.getString("posterPath")
                 val overview = tvShow.getString("overview")
                 val voteAverage = tvShow.getDouble("voteAverage")
-                val genres = tvShow.getJSONArray("genres")
 
                 val tvShowResponse = TvShowItem(
                     id = id,
@@ -128,8 +108,7 @@ class JsonHelper(private val context: Context) {
                     releaseDate = releaseDate,
                     posterPath = posterPath,
                     overview = overview,
-                    voteAverage = voteAverage,
-                    genres = genres.toDataGenre()
+                    voteAverage = voteAverage
                 )
 
                 tvShows.add(tvShowResponse)
@@ -154,7 +133,6 @@ class JsonHelper(private val context: Context) {
                 val posterPath = response.getString("posterPath")
                 val overview = response.getString("overview")
                 val voteAverage = response.getDouble("voteAverage")
-                val genres = response.getJSONArray("genres")
 
                 tvShow = TvShowItem(
                     id = tvShowId,
@@ -162,8 +140,7 @@ class JsonHelper(private val context: Context) {
                     releaseDate = releaseDate,
                     posterPath = posterPath,
                     overview = overview,
-                    voteAverage = voteAverage,
-                    genres = genres.toDataGenre()
+                    voteAverage = voteAverage
                 )
             }
         } catch (e: JSONException) {
