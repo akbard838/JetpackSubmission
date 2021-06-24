@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <style name="JetpackAndroidToolbarTitleText">
+        <item name="fontFamily">@font/poppins_semibold</item>
+        <item name="android:textSize">@dimen/text_size_16sp</item>
+        <item name="android:lineHeight" tools:targetApi="p">@dimen/text_size_24sp</item>
+        <item name="android:textColor">@color/colorWhite</item>
+    </style>
 
     <style name="JetpackAndroidTitleToolbar">
         <item name="android:layout_width">match_parent</item>

@@ -39,8 +39,8 @@ class FakeContentRepository(private val remoteDataSource: RemoteDataSource) : Co
     override fun getDetailMovie(movieId: Int): LiveData<Content> {
         val movieResult = MutableLiveData<Content>()
         CoroutineScope(IO).launch {
-            remoteDataSource.getDetailMovie(movieId, object : RemoteDataSource.GetDetailMovieCallback {
-                override fun onDetailMovieReceived(movieItem: MovieItem) {
+            remoteDataSource.getDetailMovie(movieId, object : RemoteDataSource.GetMovieByIdCallback {
+                override fun onGetMovieByIdSucceed(movieItem: MovieItem) {
                     val movie = Content(
                         id = movieItem.id ?: 0,
                         title = movieItem.title.orEmpty(),
@@ -87,8 +87,8 @@ class FakeContentRepository(private val remoteDataSource: RemoteDataSource) : Co
     override fun getDetailTvShow(tvShowId: Int): LiveData<Content> {
         val tvShowResult = MutableLiveData<Content>()
         CoroutineScope(IO).launch {
-            remoteDataSource.getDetailTvShow(tvShowId, object : RemoteDataSource.GetDetailTvShowCallback {
-                override fun onDetailTvShowReceived(tvShowItem: TvShowItem) {
+            remoteDataSource.getDetailTvShow(tvShowId, object : RemoteDataSource.GetTvShowByIdCallback {
+                override fun onGetTvShowByIdSucceed(tvShowItem: TvShowItem) {
                     val tvShow = Content(
                         id = tvShowItem.id ?: 0,
                         title = tvShowItem.name.orEmpty(),

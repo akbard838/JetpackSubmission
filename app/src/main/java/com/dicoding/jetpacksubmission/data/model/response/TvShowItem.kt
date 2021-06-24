@@ -1,5 +1,7 @@
 package com.dicoding.jetpacksubmission.data.model.response
 
+import com.dicoding.jetpacksubmission.data.local.MovieEntity
+import com.dicoding.jetpacksubmission.data.local.TvShowEntity
 import com.dicoding.jetpacksubmission.data.model.Content
 import com.google.gson.annotations.SerializedName
 
@@ -27,6 +29,18 @@ data class TvShowItem(
 ) {
     fun toContent(): Content {
         return Content(
+            id = id ?: 0,
+            title = name.orEmpty(),
+            poster = posterPath.orEmpty(),
+            overview = overview.orEmpty(),
+            year = releaseDate.orEmpty(),
+            rating = voteAverage ?: 0.0,
+            genre = genres?.map { it.toContentGenre() } ?: listOf()
+        )
+    }
+
+    fun toEntity(): TvShowEntity {
+        return TvShowEntity(
             id = id ?: 0,
             title = name.orEmpty(),
             poster = posterPath.orEmpty(),

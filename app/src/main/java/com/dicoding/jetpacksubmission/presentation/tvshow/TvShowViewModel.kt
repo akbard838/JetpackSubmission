@@ -1,14 +1,40 @@
 package com.dicoding.jetpacksubmission.presentation.tvshow
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
-import com.dicoding.jetpacksubmission.data.ContentRepository
-import com.dicoding.jetpacksubmission.data.model.Content
+import androidx.paging.PagedList
+import com.dicoding.jetpacksubmission.base.BaseResource
+import com.dicoding.jetpacksubmission.data.ContentRepository2
+import com.dicoding.jetpacksubmission.data.local.TvShowEntity
 
-class TvShowViewModel(private val contentRepository: ContentRepository) : ViewModel() {
+class TvShowViewModel(private val contentRepository: ContentRepository2) : ViewModel() {
 
-    fun getTvShows(): LiveData<List<Content>> = contentRepository.getTvShows()
+    val tvShowId = MutableLiveData<Int>()
 
-    fun getDetailTvShow(tvShowId: Int): LiveData<Content> = contentRepository.getDetailTvShow(tvShowId)
+    var detailTvShow: LiveData<BaseResource<TvShowEntity>> = Transformations.switchMap(tvShowId) {
+        contentRepository.getTvShowById(it)
+    }
+
+    fun getTvShows(): LiveData<BaseResource<PagedList<TvShowEntity>>> = contentRepository.getTvShows()
+
+    fun getFavoriteTvShows(): LiveData<PagedList<TvShowEntity>> = contentRepository.getFavoriteTvShow()
+
+    fun setSelectedTvShow(tvShowId: Int) {
+        this.tvShowId.value = tvShowId
+    }
+
+    fun setFavoriteTvShow() {
+        val moduleResource = detailTvShow.value
+        if (moduleResource != null) {
+            val tvShow = moduleResource.data
+
+            if (tvShow != null) {
+                val newState = !tvShow.isFavorite
+                contentRepository.setFavoriteTvShow(tvShow, newState)
+            }
+        }
+    }
 
 }

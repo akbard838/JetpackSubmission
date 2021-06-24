@@ -9,8 +9,12 @@
     <string name="label_overview">Overview</string>
     <string name="format_rating">%s/10</string>
     <string name="label_dash">-</string>
-    <string name="title_error">Oops, something error!</string>
-    <string name="message_error">Sorry, there is a problem when load the content details</string>
+    <string name="message_error">Oops, something error!</string>
+    <string name="message_movie_error">Sorry, there is a problem when load the movie list. Please try again later.</string>
+    <string name="message_tv_show_error">Sorry, there is a problem when load the tv show list. Please try again later.</string>
+    <string name="message_detail_error">Sorry, there is a problem when load the content details. Please try again later.</string>
     <string name="action_retry">Retry</string>
     <string name="action_cancel">Cancel</string>
+    <string name="description_favorite_button">favorite button</string>
+    <string name="title_my_favorite">My Favorite</string>
 </resources>

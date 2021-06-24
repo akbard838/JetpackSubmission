@@ -52,7 +52,7 @@ class ContentRepositoryTest {
     fun getDetailMovie() {
         runBlocking {
             doAnswer {invocation ->
-                (invocation.arguments[1] as RemoteDataSource.GetDetailMovieCallback).onDetailMovieReceived(movieResponse)
+                (invocation.arguments[1] as RemoteDataSource.GetMovieByIdCallback).onGetMovieByIdSucceed(movieResponse)
                 null
             }.`when`(remote).getDetailMovie(eq(movieId) ?: 0, any())
         }
@@ -90,7 +90,7 @@ class ContentRepositoryTest {
     fun getDetailTvShow() {
         runBlocking {
             doAnswer {invocation ->
-                (invocation.arguments[1] as RemoteDataSource.GetDetailTvShowCallback).onDetailTvShowReceived(tvShowResponse)
+                (invocation.arguments[1] as RemoteDataSource.GetTvShowByIdCallback).onGetTvShowByIdSucceed(tvShowResponse)
                 null
             }.`when`(remote).getDetailTvShow(eq(tvShowId) ?: 0, any())
         }

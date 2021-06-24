@@ -1,5 +1,6 @@
 package com.dicoding.jetpacksubmission.presentation
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.dicoding.jetpacksubmission.data.ContentRepository2
@@ -7,15 +8,15 @@ import com.dicoding.jetpacksubmission.di.Injection
 import com.dicoding.jetpacksubmission.presentation.movie.MovieViewModel
 import com.dicoding.jetpacksubmission.presentation.tvshow.TvShowViewModel
 
-class ViewModelFactory private constructor(private val contentRepository: ContentRepository2): ViewModelProvider.NewInstanceFactory() {
+class ViewModelFactory2 private constructor(private val contentRepository: ContentRepository2) : ViewModelProvider.NewInstanceFactory() {
 
     companion object {
         @Volatile
-        private var instance: ViewModelFactory? = null
+        private var instance: ViewModelFactory2? = null
 
-        fun getInstance(): ViewModelFactory =
+        fun getInstance(context: Context): ViewModelFactory2 =
             instance ?: synchronized(this) {
-                ViewModelFactory(Injection.provideRepository(context)).apply {
+                ViewModelFactory2(Injection.provideRepository(context)).apply {
                     instance = this
                 }
             }
@@ -32,6 +33,5 @@ class ViewModelFactory private constructor(private val contentRepository: Conten
             }
             else -> throw Throwable("Unknown ViewModel class: " + modelClass.name)
         }
-
     }
 }

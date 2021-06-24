@@ -14,6 +14,7 @@ import com.dicoding.jetpacksubmission.presentation.tvshow.TvShowViewModel
 import com.dicoding.jetpacksubmission.utils.*
 import com.dicoding.jetpacksubmission.utils.constant.BundleKeys
 import com.dicoding.jetpacksubmission.utils.enum.ContentType
+import com.dicoding.jetpacksubmission.utils.enum.Status
 import kotlinx.android.synthetic.main.activity_detail_content.*
 
 class DetailContentActivity : BaseActivity() {
@@ -32,6 +33,8 @@ class DetailContentActivity : BaseActivity() {
 
     private lateinit var tvShowViewModel: TvShowViewModel
 
+    private lateinit var content: Content
+
     private var contentId: Int = 0
 
     private var contentType: String = emptyString()
@@ -44,11 +47,13 @@ class DetailContentActivity : BaseActivity() {
     }
 
     override fun initUI() {
-        setupToolbar(toolbar, true, emptyString())
+        setupToolbar(detailToolbar, true, emptyString())
     }
 
     override fun initAction() {
-
+        fabFavorite.onClick {
+            movieViewModel.setFavoriteMovie()
+        }
     }
 
     override fun initProcess() {
@@ -59,56 +64,139 @@ class DetailContentActivity : BaseActivity() {
         if (contentType == ContentType.MOVIE.type) {
             movieViewModel =
                 ViewModelProvider(this, ViewModelFactory.getInstance())[MovieViewModel::class.java]
-
             getMovieData()
 
+            movieViewModel.detailMovie.observe(this, Observer { movie ->
+                if (movie != null) {
+                    when (movie.status) {
+                        Status.LOADING -> {
+                            showLoading()
+                        }
+                        Status.SUCCESS -> {
+                            hideLoading()
+                            movie.data?.let {
+                                fabFavorite.setColorFilter(
+                                    if (it.isFavorite) resources.getColor(R.color.colorRed)
+                                    else resources.getColor(R.color.colorDarkGrey)
+                                )
+                            }
+                        }
+                        Status.ERROR -> {
+                            hideLoading()
+                            showToast(getString(R.string.message_error))
+                        }
+                    }
+                }
+            })
         } else {
             tvShowViewModel =
                 ViewModelProvider(this, ViewModelFactory.getInstance())[TvShowViewModel::class.java]
-
             getTvShowData()
+
+            tvShowViewModel.detailTvShow.observe(this, Observer { movie ->
+                if (movie != null) {
+                    when (movie.status) {
+                        Status.LOADING -> {
+                            showLoading()
+                        }
+                        Status.SUCCESS -> {
+                            hideLoading()
+                            movie.data?.let {
+                                fabFavorite.setColorFilter(
+                                    if (it.isFavorite) resources.getColor(R.color.colorRed)
+                                    else resources.getColor(R.color.colorDarkGrey)
+                                )
+                            }
+                        }
+                        Status.ERROR -> {
+                            hideLoading()
+                            showToast(getString(R.string.message_error))
+                        }
+                    }
+                }
+            })
         }
     }
 
+    private fun showLoadingUI() {
+        groupContentDetail.gone()
+        pbDetail.visible()
+    }
+
+    private fun hideLoadingUI() {
+        groupContentDetail.visible()
+        pbDetail.gone()
+    }
+
     private fun getTvShowData() {
-        tvShowViewModel.getDetailTvShow(contentId).observe(this, Observer { tvShow ->
+        tvShowViewModel.setSelectedTvShow(contentId)
+
+        tvShowViewModel.detailTvShow.observe(this, Observer { tvShow ->
             if (tvShow != null) {
-                initDetailContentUI(tvShow)
-            } else {
-                showCancelableAlertDialog(
-                    context = this,
-                    title = getString(R.string.title_error),
-                    message = getString(R.string.message_error),
-                    positive = getString(R.string.action_retry),
-                    positiveListener = {
-                        getTvShowData()
-                    },
-                    negative = getString(R.string.action_cancel)
-                )
+                when (tvShow.status) {
+                    Status.LOADING -> {
+                        showLoadingUI()
+                    }
+                    Status.SUCCESS -> {
+                        hideLoadingUI()
+                        tvShow.data?.let {
+                            content = it.toContent()
+                            initDetailContentUI()
+                        }
+                    }
+                    Status.ERROR -> {
+                        hideLoadingUI()
+                        showCancelableAlertDialog(
+                            context = this,
+                            title = getString(R.string.message_error),
+                            message = getString(R.string.message_detail_error),
+                            positive = getString(R.string.action_retry),
+                            positiveListener = {
+                                getTvShowData()
+                            },
+                            negative = getString(R.string.action_cancel)
+                        )
+                    }
+                }
             }
         })
     }
 
     private fun getMovieData() {
-        movieViewModel.getDetailMovie(contentId).observe(this, Observer { movie ->
+        movieViewModel.setSelectedMovie(contentId)
+
+        movieViewModel.detailMovie.observe(this, Observer { movie ->
             if (movie != null) {
-                initDetailContentUI(movie)
-            } else {
-                showCancelableAlertDialog(
-                    context = this,
-                    title = getString(R.string.title_error),
-                    message = getString(R.string.message_error),
-                    positive = getString(R.string.action_retry),
-                    positiveListener = {
-                        getMovieData()
-                    },
-                    negative = getString(R.string.action_cancel)
-                )
+                when (movie.status) {
+                    Status.LOADING -> {
+                        showLoadingUI()
+                    }
+                    Status.SUCCESS -> {
+                        hideLoadingUI()
+                        movie.data?.let {
+                            content = it.toContent()
+                            initDetailContentUI()
+                        }
+                    }
+                    Status.ERROR -> {
+                        hideLoadingUI()
+                        showCancelableAlertDialog(
+                            context = this,
+                            title = getString(R.string.message_error),
+                            message = getString(R.string.message_detail_error),
+                            positive = getString(R.string.action_retry),
+                            positiveListener = {
+                                getMovieData()
+                            },
+                            negative = getString(R.string.action_cancel)
+                        )
+                    }
+                }
             }
         })
     }
 
-    private fun initDetailContentUI(content: Content) {
+    private fun initDetailContentUI() {
         tvTitle.text = content.title
         tvYear.text = content.year.changeDateFormat("YYYY-MM-DD", "YYYY")
         tvOverview.text = content.overview

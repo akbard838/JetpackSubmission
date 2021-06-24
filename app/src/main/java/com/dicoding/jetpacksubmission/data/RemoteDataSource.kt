@@ -1,79 +1,74 @@
-package com.dicoding.jetpacksubmission.data
-
-import com.dicoding.jetpacksubmission.data.model.response.MovieItem
-import com.dicoding.jetpacksubmission.data.model.response.TvShowItem
-import com.dicoding.jetpacksubmission.data.remote.ApiClient
-import com.dicoding.jetpacksubmission.utils.EspressoIdlingResource
-import retrofit2.await
-
-class RemoteDataSource {
-
-    companion object {
-        @Volatile
-        private var instance: RemoteDataSource? = null
-
-        fun getInstance(): RemoteDataSource =
-            instance ?: synchronized(this) {
-                instance ?: RemoteDataSource()
-            }
-    }
-
-    suspend fun getMovies(
-        callback: GetMoviesCallback
-    ) {
-        EspressoIdlingResource.increment()
-        ApiClient.instance.getMovies().await().results?.let { data ->
-            callback.onGetMoviesSucceed(
-                data
-            )
-            EspressoIdlingResource.decrement()
-        }
-    }
-
-    suspend fun getDetailMovie(movieId: Int, callback: GetDetailMovieCallback) {
-        EspressoIdlingResource.increment()
-        ApiClient.instance.getDetailMovie(movieId).await().let { movie ->
-            callback.onDetailMovieReceived(
-                movie
-            )
-            EspressoIdlingResource.decrement()
-        }
-    }
-
-    suspend fun getTvShows(callback: GetTvShowsCallback) {
-        EspressoIdlingResource.increment()
-        ApiClient.instance.getTvShows().await().results?.let { data ->
-            callback.onGetTvShowsSucceed(
-                data
-            )
-            EspressoIdlingResource.decrement()
-        }
-    }
-
-    suspend fun getDetailTvShow(tvShowId: Int, callback: GetDetailTvShowCallback) {
-        EspressoIdlingResource.increment()
-        ApiClient.instance.getDetailTvShow(tvShowId).await().let { tvShow ->
-            callback.onDetailTvShowReceived(
-                tvShow
-            )
-            EspressoIdlingResource.decrement()
-        }
-    }
-
-    interface GetMoviesCallback {
-        fun onGetMoviesSucceed(movieItems: List<MovieItem>)
-    }
-
-    interface GetDetailMovieCallback {
-        fun onDetailMovieReceived(movieItem: MovieItem)
-    }
-
-    interface GetTvShowsCallback {
-        fun onGetTvShowsSucceed(tvShowItems: List<TvShowItem>)
-    }
-
-    interface GetDetailTvShowCallback {
-        fun onDetailTvShowReceived(tvShowItem: TvShowItem)
-    }
-
-}
+//package com.dicoding.jetpacksubmission.data
+//
+//import android.os.Handler
+//import android.os.Looper
+//import com.dicoding.jetpacksubmission.data.model.response.MovieItem
+//import com.dicoding.jetpacksubmission.data.model.response.TvShowItem
+//import com.dicoding.jetpacksubmission.utils.EspressoIdlingResource
+//import com.dicoding.jetpacksubmission.utils.JsonHelper
+//
+//class RemoteDataSource private constructor(private val jsonHelper: JsonHelper) {
+//
+//    private val handler = Handler(Looper.getMainLooper())
+//
+//    companion object {
+//        private const val SERVICE_LATENCY_IN_MILLIS: Long = 2000
+//
+//        @Volatile
+//        private var instance: RemoteDataSource? = null
+//
+//        fun getInstance(helper: JsonHelper): RemoteDataSource =
+//            instance ?: synchronized(this) {
+//                RemoteDataSource(helper).apply { instance = this }
+//            }
+//    }
+//
+//    fun getMovies(getMoviesCallback: GetMoviesCallback) {
+//        EspressoIdlingResource.increment()
+//        handler.postDelayed({
+//            getMoviesCallback.onGetMoviesSucceed(jsonHelper.getMovies())
+//            EspressoIdlingResource.decrement()
+//        }, SERVICE_LATENCY_IN_MILLIS)
+//    }
+//
+//    fun getMovieById(movieId: Int?, getMovieByIdByIdCallback: GetMovieByIdCallback) {
+//        EspressoIdlingResource.increment()
+//        handler.postDelayed({
+//            movieId?.let { jsonHelper.getMovieById(it) }?.let { getMovieByIdByIdCallback.onGetMovieByIdSucceed(it) }
+//            EspressoIdlingResource.decrement()
+//        }, SERVICE_LATENCY_IN_MILLIS)
+//    }
+//
+//    fun getTvShows(getTvShowsCallback: GetTvShowsCallback) {
+//        EspressoIdlingResource.increment()
+//        handler.postDelayed({
+//            getTvShowsCallback.onGetTvShowsSucceed(jsonHelper.getTvShowList())
+//            EspressoIdlingResource.decrement()
+//        }, SERVICE_LATENCY_IN_MILLIS)
+//    }
+//
+//    fun getTvShowById(tvShowId: Int?, getTvShowByIdCallback: GetTvShowByIdCallback) {
+//        EspressoIdlingResource.increment()
+//        handler.postDelayed({
+//            tvShowId?.let { jsonHelper.getTvShowById(it) }?.let { getTvShowByIdCallback.onGetTvShowByIdSucceed(it) }
+//            EspressoIdlingResource.decrement()
+//        }, SERVICE_LATENCY_IN_MILLIS)
+//    }
+//
+//    interface GetMoviesCallback {
+//        fun onGetMoviesSucceed(movieItems: List<MovieItem>)
+//    }
+//
+//    interface GetMovieByIdCallback {
+//        fun onGetMovieByIdSucceed(movieItem: MovieItem)
+//    }
+//
+//    interface GetTvShowsCallback {
+//        fun onGetTvShowsSucceed(tvShowItems: List<TvShowItem>)
+//    }
+//
+//    interface GetTvShowByIdCallback {
+//        fun onGetTvShowByIdSucceed(tvShowItem: TvShowItem)
+//    }
+//
+//}
