@@ -1,16 +1,16 @@
-package com.dicoding.jetpacksubmission.data
+package com.dicoding.jetpacksubmission.data.remote
 
 import android.os.Handler
 import android.os.Looper
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.dicoding.jetpacksubmission.base.BaseApiResponse
-import com.dicoding.jetpacksubmission.data.model.response.MovieItem
-import com.dicoding.jetpacksubmission.data.model.response.TvShowItem
+import com.dicoding.jetpacksubmission.data.model.response.Movie
+import com.dicoding.jetpacksubmission.data.model.response.TvShow
 import com.dicoding.jetpacksubmission.utils.EspressoIdlingResource
 import com.dicoding.jetpacksubmission.utils.JsonHelper
 
-class RemoteDataSource2 private constructor(private val jsonHelper: JsonHelper) {
+class RemoteDataSource private constructor(private val jsonHelper: JsonHelper) {
 
     private val handler = Handler(Looper.getMainLooper())
 
@@ -18,17 +18,18 @@ class RemoteDataSource2 private constructor(private val jsonHelper: JsonHelper) 
         private const val SERVICE_LATENCY_IN_MILLIS: Long = 2000
 
         @Volatile
-        private var instance: RemoteDataSource2? = null
+        private var instance: RemoteDataSource? = null
 
-        fun getInstance(helper: JsonHelper): RemoteDataSource2 =
-            instance ?: synchronized(this) {
-                RemoteDataSource2(helper).apply { instance = this }
+        fun getInstance(helper: JsonHelper): RemoteDataSource =
+            instance
+                ?: synchronized(this) {
+                RemoteDataSource(helper).apply { instance = this }
             }
     }
 
-    fun getMovies(): LiveData<BaseApiResponse<List<MovieItem>>> {
+    fun getMovies(): LiveData<BaseApiResponse<List<Movie>>> {
         EspressoIdlingResource.increment()
-        val resultMovies = MutableLiveData<BaseApiResponse<List<MovieItem>>>()
+        val resultMovies = MutableLiveData<BaseApiResponse<List<Movie>>>()
         handler.postDelayed({
             resultMovies.value = BaseApiResponse.success(jsonHelper.getMovies())
             EspressoIdlingResource.decrement()
@@ -36,9 +37,9 @@ class RemoteDataSource2 private constructor(private val jsonHelper: JsonHelper) 
         return resultMovies
     }
 
-    fun getTvShows(): LiveData<BaseApiResponse<List<TvShowItem>>> {
+    fun getTvShows(): LiveData<BaseApiResponse<List<TvShow>>> {
         EspressoIdlingResource.increment()
-        val resultTvShows = MutableLiveData<BaseApiResponse<List<TvShowItem>>>()
+        val resultTvShows = MutableLiveData<BaseApiResponse<List<TvShow>>>()
         handler.postDelayed({
             resultTvShows.value = BaseApiResponse.success(jsonHelper.getTvShows())
             EspressoIdlingResource.decrement()

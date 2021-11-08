@@ -35,6 +35,9 @@
         <activity
             android:name=".presentation.favorite.FavoriteActivity"
             android:screenOrientation="portrait"/>
+        <activity
+            android:name=".presentation.detail.DaffaActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

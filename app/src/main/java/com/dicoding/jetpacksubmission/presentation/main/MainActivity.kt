@@ -1,15 +1,18 @@
 package com.dicoding.jetpacksubmission.presentation.main
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import com.dicoding.jetpacksubmission.base.BaseActivity
 import com.dicoding.jetpacksubmission.R
+import com.dicoding.jetpacksubmission.base.BaseActivity
 import com.dicoding.jetpacksubmission.base.BaseFragment
 import com.dicoding.jetpacksubmission.base.BasePagerAdapter
 import com.dicoding.jetpacksubmission.presentation.favorite.FavoriteActivity
 import com.dicoding.jetpacksubmission.presentation.movie.MovieFragment
 import com.dicoding.jetpacksubmission.presentation.tvshow.TvShowFragment
 import com.dicoding.jetpacksubmission.utils.onClick
+import com.dicoding.jetpacksubmission.utils.showCancelableAlertDialog
+import com.dicoding.jetpacksubmission.utils.showToast
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -49,15 +52,27 @@ class MainActivity : BaseActivity() {
     }
 
     private fun setViewPager() {
-        val fragmentList = listOf<BaseFragment>(MovieFragment(),
+        val fragmentList = listOf<BaseFragment>(
+            MovieFragment(),
             TvShowFragment()
         )
         val tabTitle = listOf(getString(R.string.label_movies), getString(R.string.label_tv_shows))
 
         vpHome.adapter = BasePagerAdapter(fragmentList, this.supportFragmentManager, lifecycle)
 
-        TabLayoutMediator(tlHome, vpHome){ tab, position ->
+        TabLayoutMediator(tlHome, vpHome) { tab, position ->
             tab.text = tabTitle[position]
         }.attach()
+    }
+
+    override fun onBackPressed() {
+        showCancelableAlertDialog(
+            context = this,
+            title = getString(R.string.title_exit),
+            message = getString(R.string.message_exit),
+            positive = getString(R.string.action_yes),
+            positiveListener = { finishAffinity() },
+            negative = getString(R.string.action_no)
+        )
     }
 }

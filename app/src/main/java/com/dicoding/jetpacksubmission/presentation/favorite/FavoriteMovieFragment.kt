@@ -6,8 +6,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dicoding.jetpacksubmission.R
 import com.dicoding.jetpacksubmission.base.BaseFragment
-import com.dicoding.jetpacksubmission.data.local.MovieEntity
-import com.dicoding.jetpacksubmission.presentation.ViewModelFactory2
+import com.dicoding.jetpacksubmission.data.db.model.MovieEntity
+import com.dicoding.jetpacksubmission.presentation.ViewModelFactory
 import com.dicoding.jetpacksubmission.presentation.adapter.MovieAdapter
 import com.dicoding.jetpacksubmission.presentation.detail.DetailContentActivity
 import com.dicoding.jetpacksubmission.presentation.movie.MovieViewModel
@@ -49,7 +49,7 @@ class FavoriteMovieFragment : BaseFragment(), MovieAdapter.OnMovieItemListener {
     }
 
     override fun setupObservable() {
-        val factory = ViewModelFactory2.getInstance(requireActivity())
+        val factory = ViewModelFactory.getInstance(requireActivity())
         movieViewModel = ViewModelProvider(this, factory)[MovieViewModel::class.java]
 
         movieViewModel.getFavoriteMovies().observe(this, Observer { movies ->

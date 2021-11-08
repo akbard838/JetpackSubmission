@@ -6,8 +6,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dicoding.jetpacksubmission.R
 import com.dicoding.jetpacksubmission.base.BaseFragment
-import com.dicoding.jetpacksubmission.data.local.TvShowEntity
-import com.dicoding.jetpacksubmission.presentation.ViewModelFactory2
+import com.dicoding.jetpacksubmission.data.db.model.TvShowEntity
+import com.dicoding.jetpacksubmission.presentation.ViewModelFactory
 import com.dicoding.jetpacksubmission.presentation.adapter.TvShowAdapter
 import com.dicoding.jetpacksubmission.presentation.detail.DetailContentActivity
 import com.dicoding.jetpacksubmission.presentation.tvshow.TvShowViewModel
@@ -49,7 +49,7 @@ class FavoriteTvShowFragment : BaseFragment(), TvShowAdapter.OnTvShowItemListene
     }
 
     override fun setupObservable() {
-        val factory = ViewModelFactory2.getInstance(requireActivity())
+        val factory = ViewModelFactory.getInstance(requireActivity())
         tvShowViewModel = ViewModelProvider(this, factory)[TvShowViewModel::class.java]
 
         tvShowViewModel.getFavoriteTvShows().observe(this, Observer { tvShows ->

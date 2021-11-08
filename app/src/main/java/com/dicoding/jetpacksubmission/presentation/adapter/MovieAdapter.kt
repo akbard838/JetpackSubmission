@@ -11,7 +11,7 @@ import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.dicoding.jetpacksubmission.R
-import com.dicoding.jetpacksubmission.data.local.MovieEntity
+import com.dicoding.jetpacksubmission.data.db.model.MovieEntity
 import com.dicoding.jetpacksubmission.utils.*
 import kotlinx.android.synthetic.main.item_content.view.*
 
@@ -43,7 +43,7 @@ class MovieAdapter(
         if (data != null) {
             with(movieViewHolder.itemView) {
                 tvTitle.text = data.title
-                tvYear.text = data.year?.changeDateFormat("YYYY-MM-DD", "YYYY")
+                tvYear.text = changeDate(data.year.orEmpty(), "yyyy-MM-dd", "YYYY")
                 tvOverview.text = data.overview
                 tvRating.text =
                     String.format(context.getString(R.string.format_rating), data.rating.toString())

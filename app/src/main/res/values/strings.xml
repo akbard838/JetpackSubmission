@@ -3,7 +3,7 @@
     <string name="label_movies">Movies</string>
     <string name="label_tv_shows">Tv Shows</string>
     <string name="message_please_wait">Please Wait</string>
-    <string name="label_genre">Genre</string>
+    <string name="label_release_date">Release Date</string>
     <string name="label_separator">|</string>
     <string name="label_rating">Rating</string>
     <string name="label_overview">Overview</string>
@@ -18,4 +18,12 @@
     <string name="description_favorite_button">favorite button</string>
     <string name="title_my_favorite">My Favorite</string>
     <string name="label_my_favorite">My Favorite</string>
+    <string name="hint_search_movie_here">Search movie here...</string>
+    <string name="hint_search_tv_show_here">Search tv show here...</string>
+    <string name="action_no">No</string>
+    <string name="action_yes">Yes</string>
+    <string name="message_exit">By pressing YES the application will exit immediately</string>
+    <string name="title_exit">Are you sure want to exit the application?</string>
+    <string name="message_add_favorite">Added to my favorite</string>
+    <string name="message_delete_favorite">Deleted from my favorite</string>
 </resources>

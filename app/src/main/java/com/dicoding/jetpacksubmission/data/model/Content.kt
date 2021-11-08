@@ -1,7 +1,6 @@
 package com.dicoding.jetpacksubmission.data.model
 
 import android.os.Parcelable
-import com.dicoding.jetpacksubmission.data.model.response.GenreItem
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize

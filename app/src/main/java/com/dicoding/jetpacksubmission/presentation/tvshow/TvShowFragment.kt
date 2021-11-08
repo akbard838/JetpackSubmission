@@ -1,13 +1,15 @@
 package com.dicoding.jetpacksubmission.presentation.tvshow
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dicoding.jetpacksubmission.R
 import com.dicoding.jetpacksubmission.base.BaseFragment
-import com.dicoding.jetpacksubmission.data.local.TvShowEntity
-import com.dicoding.jetpacksubmission.presentation.ViewModelFactory2
+import com.dicoding.jetpacksubmission.data.db.model.TvShowEntity
+import com.dicoding.jetpacksubmission.presentation.ViewModelFactory
 import com.dicoding.jetpacksubmission.presentation.adapter.TvShowAdapter
 import com.dicoding.jetpacksubmission.presentation.detail.DetailContentActivity
 import com.dicoding.jetpacksubmission.utils.enum.ContentType
@@ -38,11 +40,26 @@ class TvShowFragment : BaseFragment(), TvShowAdapter.OnTvShowItemListener {
     }
 
     override fun setupUI() {
+        edtTvShow.visible()
         initRecyclerView()
     }
 
     override fun setupAction() {
+        edtTvShow.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable) {
+            }
 
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(text: CharSequence, start: Int, before: Int, count: Int) {
+                tvShowAdapter.submitList(null)
+                tvShowViewModel.getSearchTvShow("$text%").observe(viewLifecycleOwner, Observer { movies ->
+                    tvShowAdapter.submitList(movies)
+                    tvShowAdapter.notifyDataSetChanged()
+                })
+            }
+        })
     }
 
     override fun setupProcess() {
@@ -50,7 +67,7 @@ class TvShowFragment : BaseFragment(), TvShowAdapter.OnTvShowItemListener {
     }
 
     override fun setupObservable() {
-        val factory = ViewModelFactory2.getInstance(requireActivity())
+        val factory = ViewModelFactory.getInstance(requireActivity())
         tvShowViewModel = ViewModelProvider(this, factory)[TvShowViewModel::class.java]
 
         getTvShowsData()
@@ -95,8 +112,8 @@ class TvShowFragment : BaseFragment(), TvShowAdapter.OnTvShowItemListener {
         })
     }
 
-    override fun onTvShowItemClicked(tvshow: TvShowEntity) {
-        DetailContentActivity.start(requireContext(), tvshow.id ?: 0, ContentType.TV_SHOW.type)
+    override fun onTvShowItemClicked(tvShow: TvShowEntity) {
+        DetailContentActivity.start(requireContext(), tvShow.id ?: 0, ContentType.TV_SHOW.type)
     }
 
 }

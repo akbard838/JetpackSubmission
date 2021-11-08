@@ -6,10 +6,10 @@ import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import androidx.paging.PagedList
 import com.dicoding.jetpacksubmission.base.BaseResource
-import com.dicoding.jetpacksubmission.data.ContentRepository2
-import com.dicoding.jetpacksubmission.data.local.MovieEntity
+import com.dicoding.jetpacksubmission.data.ContentRepository
+import com.dicoding.jetpacksubmission.data.db.model.MovieEntity
 
-class MovieViewModel(private val contentRepository: ContentRepository2) : ViewModel() {
+class MovieViewModel(private val contentRepository: ContentRepository) : ViewModel() {
 
     val movieId = MutableLiveData<Int>()
 
@@ -21,14 +21,16 @@ class MovieViewModel(private val contentRepository: ContentRepository2) : ViewMo
 
     fun getFavoriteMovies(): LiveData<PagedList<MovieEntity>> = contentRepository.getFavoriteMovie()
 
+    fun getSearchMovie(text: String): LiveData<PagedList<MovieEntity>> = contentRepository.getSearchMovie(text)
+
     fun setSelectedMovie(movieId: Int) {
         this.movieId.value = movieId
     }
 
     fun setFavoriteMovie() {
-        val moduleResource = detailMovie.value
-        if (moduleResource != null) {
-            val movie = moduleResource.data
+        val movieResource = detailMovie.value
+        if (movieResource != null) {
+            val movie = movieResource.data
 
             if (movie != null) {
                 val newState = !movie.isFavorite

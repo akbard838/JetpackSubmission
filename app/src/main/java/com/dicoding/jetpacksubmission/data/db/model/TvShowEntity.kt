@@ -1,9 +1,8 @@
-package com.dicoding.jetpacksubmission.data.local
+package com.dicoding.jetpacksubmission.data.db.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.dicoding.jetpacksubmission.data.model.Content
-import com.dicoding.jetpacksubmission.data.model.ContentGenre
 import com.dicoding.jetpacksubmission.utils.emptyString
 
 @Entity

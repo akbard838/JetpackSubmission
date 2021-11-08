@@ -115,23 +115,13 @@
                     tools:text="@string/sample_title" />
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvYear"
-                    style="@style/JetpackAndroidText.White"
-                    android:layout_marginStart="@dimen/dimen_24dp"
-                    android:layout_marginTop="@dimen/dimen_2dp"
-                    android:textSize="@dimen/text_size_12sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvTitle"
-                    tools:text="@string/sample_year" />
-
-                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvLabelRating"
                     style="@style/JetpackAndroidText.Bold.White"
                     android:layout_marginTop="@dimen/dimen_24dp"
                     android:text="@string/label_rating"
                     android:textSize="@dimen/text_size_14sp"
-                    app:layout_constraintStart_toStartOf="@id/tvYear"
-                    app:layout_constraintTop_toBottomOf="@id/tvYear" />
+                    app:layout_constraintStart_toStartOf="@id/tvTitle"
+                    app:layout_constraintTop_toBottomOf="@id/tvTitle" />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/imgRating"
@@ -159,29 +149,29 @@
                     android:layout_height="@dimen/dimen_0dp"
                     android:layout_marginStart="@dimen/dimen_32dp"
                     android:background="@color/colorWhiteTwo"
-                    app:layout_constraintBottom_toBottomOf="@id/tvGenre"
+                    app:layout_constraintBottom_toBottomOf="@id/tvReleaseDate"
                     app:layout_constraintStart_toEndOf="@id/tvRating"
                     app:layout_constraintTop_toTopOf="@id/tvLabelRating" />
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvLabelGenre"
+                    android:id="@+id/tvLabelReleaseDate"
                     style="@style/JetpackAndroidText.Bold.White"
                     android:layout_marginStart="@dimen/dimen_32dp"
-                    android:text="@string/label_genre"
+                    android:text="@string/label_release_date"
                     android:textSize="@dimen/text_size_14sp"
                     app:layout_constraintStart_toEndOf="@id/separator"
                     app:layout_constraintTop_toTopOf="@id/tvLabelRating" />
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvGenre"
+                    android:id="@+id/tvReleaseDate"
                     style="@style/JetpackAndroidText.White"
                     android:layout_width="@dimen/dimen_0dp"
                     android:layout_marginEnd="@dimen/dimen_24dp"
                     android:textSize="@dimen/text_size_12sp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="@id/tvLabelGenre"
-                    app:layout_constraintTop_toBottomOf="@id/tvLabelGenre"
-                    tools:text="@string/sample_genre" />
+                    app:layout_constraintStart_toStartOf="@id/tvLabelReleaseDate"
+                    app:layout_constraintTop_toBottomOf="@id/tvLabelReleaseDate"
+                    tools:text="12 January 2021" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvLabelOverview"
@@ -191,7 +181,7 @@
                     android:text="@string/label_overview"
                     android:textSize="@dimen/text_size_14sp"
                     app:layout_constraintStart_toStartOf="@id/tvLabelRating"
-                    app:layout_constraintTop_toBottomOf="@id/tvGenre" />
+                    app:layout_constraintTop_toBottomOf="@id/tvReleaseDate" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvOverview"
@@ -210,7 +200,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:visibility="gone"
-                    app:constraint_referenced_ids="imgRating, tvTitle, tvGenre, tvLabelGenre, tvYear, tvRating, tvLabelRating, tvOverview, tvLabelOverview"/>
+                    app:constraint_referenced_ids="imgRating, tvTitle, tvReleaseDate, tvLabelReleaseDate, tvRating, tvLabelRating, tvOverview, tvLabelOverview"/>
 
                 <ProgressBar
                     android:id="@+id/pbDetail"

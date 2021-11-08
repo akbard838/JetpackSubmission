@@ -74,14 +74,4 @@ abstract class BaseFragment : Fragment(), BaseView {
     abstract fun setupAction()
     abstract fun setupProcess()
     abstract fun setupObservable()
-
-    @TargetApi(23)
-    fun hasPermission(permission: String): Boolean {
-        return this.baseActivity?.hasPermission(permission) == true
-    }
-
-    @TargetApi(23)
-    fun requestPermissionsSafely(permissions: Array<String?>?, requestCode: Int) {
-        this.baseActivity?.requestPermissionsSafely(permissions, requestCode)
-    }
 }

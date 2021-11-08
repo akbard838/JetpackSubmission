@@ -39,6 +39,8 @@ class DetailContentActivity : BaseActivity() {
 
     private var contentType: String = emptyString()
 
+    private var isButtonFavoriteClicked: Boolean = false
+
     override val layoutResourceId: Int = R.layout.activity_detail_content
 
     override fun initIntent() {
@@ -52,6 +54,7 @@ class DetailContentActivity : BaseActivity() {
 
     override fun initAction() {
         fabFavorite.onClick {
+            isButtonFavoriteClicked = true
             if (contentType == ContentType.MOVIE.type) movieViewModel.setFavoriteMovie()
             else tvShowViewModel.setFavoriteTvShow()
         }
@@ -64,7 +67,10 @@ class DetailContentActivity : BaseActivity() {
     override fun initObservable() {
         if (contentType == ContentType.MOVIE.type) {
             movieViewModel =
-                ViewModelProvider(this, ViewModelFactory.getInstance(this))[MovieViewModel::class.java]
+                ViewModelProvider(
+                    this,
+                    ViewModelFactory.getInstance(this)
+                )[MovieViewModel::class.java]
             getMovieData()
 
             movieViewModel.detailMovie.observe(this, Observer { movie ->
@@ -76,10 +82,7 @@ class DetailContentActivity : BaseActivity() {
                         Status.SUCCESS -> {
                             hideLoading()
                             movie.data?.let {
-                                fabFavorite.setColorFilter(
-                                    if (it.isFavorite) resources.getColor(R.color.colorRed)
-                                    else resources.getColor(R.color.colorLightGrey)
-                                )
+                                setButtonFavoriteState(it.isFavorite)
                             }
                         }
                         Status.ERROR -> {
@@ -91,7 +94,10 @@ class DetailContentActivity : BaseActivity() {
             })
         } else {
             tvShowViewModel =
-                ViewModelProvider(this, ViewModelFactory.getInstance(this))[TvShowViewModel::class.java]
+                ViewModelProvider(
+                    this,
+                    ViewModelFactory.getInstance(this)
+                )[TvShowViewModel::class.java]
             getTvShowData()
 
             tvShowViewModel.detailTvShow.observe(this, Observer { movie ->
@@ -103,10 +109,7 @@ class DetailContentActivity : BaseActivity() {
                         Status.SUCCESS -> {
                             hideLoading()
                             movie.data?.let {
-                                fabFavorite.setColorFilter(
-                                    if (it.isFavorite) resources.getColor(R.color.colorRed)
-                                    else resources.getColor(R.color.colorLightGrey)
-                                )
+                                setButtonFavoriteState(it.isFavorite)
                             }
                         }
                         Status.ERROR -> {
@@ -117,6 +120,17 @@ class DetailContentActivity : BaseActivity() {
                 }
             })
         }
+    }
+
+    private fun setButtonFavoriteState(isFavorite: Boolean){
+        if (isFavorite) {
+            fabFavorite.setColorFilter(resources.getColor(R.color.colorRed))
+            if (isButtonFavoriteClicked) showToast(getString(R.string.message_add_favorite))
+        } else {
+            fabFavorite.setColorFilter(resources.getColor(R.color.colorLightGrey))
+            if (isButtonFavoriteClicked) showToast(getString(R.string.message_delete_favorite))
+        }
+        isButtonFavoriteClicked = false
     }
 
     private fun showLoadingUI() {
@@ -199,7 +213,7 @@ class DetailContentActivity : BaseActivity() {
 
     private fun initDetailContentUI() {
         tvTitle.text = content.title
-        tvYear.text = content.year.changeDateFormat("YYYY-MM-DD", "YYYY")
+        tvReleaseDate.text = changeDate(content.year, "yyyy-MM-dd", "d MMMM yyyy")
         tvOverview.text = content.overview
         tvRating.text = String.format(getString(R.string.format_rating), content.rating.toString())
         imgPosterDetail.tag = content.poster

@@ -40,9 +40,9 @@
         android:id="@+id/btnMyFavorite"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/dimen_24dp"
-        android:layout_marginBottom="@dimen/dimen_24dp"
-        app:cardBackgroundColor="@color/colorBlackTwo"
+        android:layout_marginEnd="@dimen/dimen_18dp"
+        android:layout_marginBottom="@dimen/dimen_18dp"
+        app:cardBackgroundColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:cardCornerRadius="@dimen/dimen_12dp"
         app:layout_constraintEnd_toEndOf="parent">
@@ -53,16 +53,17 @@
             android:padding="@dimen/dimen_12dp">
 
             <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/dimen_18dp"
+                android:layout_height="@dimen/dimen_18dp"
                 android:layout_gravity="center_vertical"
-                android:layout_marginEnd="@dimen/dimen_12dp"
+                android:layout_marginEnd="@dimen/dimen_8dp"
                 android:src="@drawable/ic_favorite" />
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvFavfav"
                 style="@style/JetpackAndroidText.Bold.White"
                 android:layout_width="wrap_content"
-                android:textSize="@dimen/text_size_18sp"
+                android:textSize="@dimen/text_size_14sp"
                 android:layout_height="wrap_content"
                 android:text="@string/label_my_favorite" />
 

@@ -1,10 +1,8 @@
 package com.dicoding.jetpacksubmission.utils
 
 import android.content.Context
-import com.dicoding.jetpacksubmission.data.model.response.GenreItem
-import com.dicoding.jetpacksubmission.data.model.response.MovieItem
-import com.dicoding.jetpacksubmission.data.model.response.TvShowItem
-import org.json.JSONArray
+import com.dicoding.jetpacksubmission.data.model.response.Movie
+import com.dicoding.jetpacksubmission.data.model.response.TvShow
 import org.json.JSONException
 import org.json.JSONObject
 import java.io.IOException
@@ -24,8 +22,8 @@ class JsonHelper(private val context: Context) {
         }
     }
 
-    fun getMovies(): List<MovieItem> {
-        val movies = ArrayList<MovieItem>()
+    fun getMovies(): List<Movie> {
+        val movies = ArrayList<Movie>()
         try {
             val responseObject = JSONObject(parsingDataToString("movies.json"))
             val listArray = responseObject.getJSONArray("result")
@@ -39,7 +37,7 @@ class JsonHelper(private val context: Context) {
                 val overview = movie.getString("overview")
                 val voteAverage = movie.getDouble("voteAverage")
 
-                val movieResponse = MovieItem(
+                val movieResponse = Movie(
                     id = id,
                     title = title,
                     releaseDate = releaseDate,
@@ -55,9 +53,9 @@ class JsonHelper(private val context: Context) {
         return movies
     }
 
-    fun getMovieById(id: Int): MovieItem {
+    fun getMovieById(id: Int): Movie {
         val movieData = String.format("movie_%s.json", id)
-        var movie: MovieItem? = null
+        var movie: Movie? = null
         try {
             val result = parsingDataToString(movieData)
             if (result != null) {
@@ -70,7 +68,7 @@ class JsonHelper(private val context: Context) {
                 val overview = response.getString("overview")
                 val voteAverage = response.getDouble("voteAverage")
 
-                movie = MovieItem(
+                movie = Movie(
                     id = movieId,
                     title = title,
                     releaseDate = releaseDate,
@@ -83,11 +81,11 @@ class JsonHelper(private val context: Context) {
         } catch (e: JSONException) {
             e.printStackTrace()
         }
-        return movie as MovieItem
+        return movie as Movie
     }
 
-    fun getTvShows():List<TvShowItem>{
-        val tvShows = ArrayList<TvShowItem>()
+    fun getTvShows():List<TvShow>{
+        val tvShows = ArrayList<TvShow>()
 
         try {
             val responseObject = JSONObject(parsingDataToString("tvshows.json"))
@@ -102,9 +100,9 @@ class JsonHelper(private val context: Context) {
                 val overview = tvShow.getString("overview")
                 val voteAverage = tvShow.getDouble("voteAverage")
 
-                val tvShowResponse = TvShowItem(
+                val tvShowResponse = TvShow(
                     id = id,
-                    name = name,
+                    title = name,
                     releaseDate = releaseDate,
                     posterPath = posterPath,
                     overview = overview,
@@ -119,9 +117,9 @@ class JsonHelper(private val context: Context) {
         return tvShows
     }
 
-    fun getTvShowById(id: Int): TvShowItem {
+    fun getTvShowById(id: Int): TvShow {
         val tvShowData = String.format("tvshow_%s.json", id)
-        var tvShow: TvShowItem? = null
+        var tvShow: TvShow? = null
         try {
             val result = parsingDataToString(tvShowData)
             if (result != null) {
@@ -134,9 +132,9 @@ class JsonHelper(private val context: Context) {
                 val overview = response.getString("overview")
                 val voteAverage = response.getDouble("voteAverage")
 
-                tvShow = TvShowItem(
+                tvShow = TvShow(
                     id = tvShowId,
-                    name = name,
+                    title = name,
                     releaseDate = releaseDate,
                     posterPath = posterPath,
                     overview = overview,
@@ -146,6 +144,6 @@ class JsonHelper(private val context: Context) {
         } catch (e: JSONException) {
             e.printStackTrace()
         }
-        return tvShow as TvShowItem
+        return tvShow as TvShow
     }
 }

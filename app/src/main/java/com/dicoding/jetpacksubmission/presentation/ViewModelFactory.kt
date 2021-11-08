@@ -3,12 +3,12 @@ package com.dicoding.jetpacksubmission.presentation
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.dicoding.jetpacksubmission.data.ContentRepository2
+import com.dicoding.jetpacksubmission.data.ContentRepository
 import com.dicoding.jetpacksubmission.di.Injection
 import com.dicoding.jetpacksubmission.presentation.movie.MovieViewModel
 import com.dicoding.jetpacksubmission.presentation.tvshow.TvShowViewModel
 
-class ViewModelFactory private constructor(private val contentRepository: ContentRepository2): ViewModelProvider.NewInstanceFactory() {
+class ViewModelFactory private constructor(private val contentRepository: ContentRepository) : ViewModelProvider.NewInstanceFactory() {
 
     companion object {
         @Volatile
@@ -33,6 +33,5 @@ class ViewModelFactory private constructor(private val contentRepository: Conten
             }
             else -> throw Throwable("Unknown ViewModel class: " + modelClass.name)
         }
-
     }
 }

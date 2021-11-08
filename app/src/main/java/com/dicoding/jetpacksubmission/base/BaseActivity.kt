@@ -68,18 +68,4 @@ abstract class BaseActivity : AppCompatActivity(), BaseView {
     abstract fun initAction()
     abstract fun initProcess()
     abstract fun initObservable()
-
-    @TargetApi(23)
-    fun hasPermission(permission: String): Boolean {
-        Intrinsics.checkParameterIsNotNull(permission, "permission")
-        return Build.VERSION.SDK_INT < 23 || this.checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED
-    }
-
-    @TargetApi(23)
-    fun requestPermissionsSafely(permissions: Array<String?>?, requestCode: Int) {
-        Intrinsics.checkParameterIsNotNull(permissions, "permissions")
-        if (Build.VERSION.SDK_INT >= 23) {
-            requestPermissions(permissions!!, requestCode)
-        }
-    }
 }

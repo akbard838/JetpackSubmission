@@ -11,7 +11,7 @@ import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.dicoding.jetpacksubmission.R
-import com.dicoding.jetpacksubmission.data.local.TvShowEntity
+import com.dicoding.jetpacksubmission.data.db.model.TvShowEntity
 import com.dicoding.jetpacksubmission.utils.*
 import kotlinx.android.synthetic.main.item_content.view.*
 
@@ -70,7 +70,7 @@ class TvShowAdapter(
     }
 
     interface OnTvShowItemListener {
-        fun onTvShowItemClicked(TvShow: TvShowEntity)
+        fun onTvShowItemClicked(tvShow: TvShowEntity)
     }
 }
 

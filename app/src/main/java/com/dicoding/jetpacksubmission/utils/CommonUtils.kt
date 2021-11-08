@@ -1,22 +1,16 @@
 package com.dicoding.jetpacksubmission.utils
 
-import android.content.Context
-import android.net.ConnectivityManager
-import android.net.NetworkCapabilities
-import android.os.Build
 import android.view.View
 import android.widget.Toast
 import androidx.annotation.NonNull
-import androidx.annotation.RequiresApi
 import com.dicoding.jetpacksubmission.R
+import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
 const val POSTER_ENDPOINT = "https://image.tmdb.org/t/p/"
 
 const val POSTER_SIZE_ENDPOINT_W185 = "w185"
-
-const val POSTER_SIZE_ENDPOINT_W780 = "w780"
 
 fun emptyString() = ""
 
@@ -28,10 +22,6 @@ fun View.onClick(@NonNull listener: (() -> Unit)? = null) {
 
 fun showToast(message: String) {
     Toast.makeText(ContextProvider.get(), message, Toast.LENGTH_SHORT).show()
-}
-
-fun showLongToast(message: String) {
-    Toast.makeText(ContextProvider.get(), message, Toast.LENGTH_LONG).show()
 }
 
 fun View.gone() {
@@ -54,12 +44,15 @@ fun String.changeDateFormat(currentFormat: String, newFormat: String, locale: Lo
     }
 }
 
-@RequiresApi(Build.VERSION_CODES.M)
-fun isNetworkAvailable(context: Context) =
-    (context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager).run {
-        getNetworkCapabilities(activeNetwork)?.run {
-            hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)
-                || hasTransport(NetworkCapabilities.TRANSPORT_WIFI)
-                || hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)
-        } ?: false
+fun changeDate(time: String, currentFormat: String, newFormat: String): String? {
+    val inputFormat = SimpleDateFormat(currentFormat)
+    val outputFormat = SimpleDateFormat(newFormat)
+    var str: String? = null
+    try {
+        val date = inputFormat.parse(time)
+        str = outputFormat.format(date)
+    } catch (e: ParseException) {
+        e.printStackTrace()
     }
+    return str
+}

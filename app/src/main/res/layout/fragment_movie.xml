@@ -7,10 +7,30 @@
     android:background="@color/colorBlackTwo"
     android:orientation="vertical">
 
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/edtMovie"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_16dp"
+        android:layout_marginTop="@dimen/dimen_16dp"
+        android:layout_marginEnd="@dimen/dimen_16dp"
+        android:background="@drawable/bg_rectangle_white_12"
+        android:drawableStart="@drawable/ic_search"
+        android:drawablePadding="@dimen/dimen_8dp"
+        android:hint="@string/hint_search_movie_here"
+        android:imeOptions="actionDone"
+        android:lines="1"
+        android:maxLines="1"
+        android:padding="@dimen/dimen_8dp"
+        android:singleLine="true"
+        android:visibility="gone" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvMovie"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@id/edtMovie"
+        android:layout_marginTop="8dp"
         android:paddingTop="@dimen/dimen_8dp"
         android:paddingBottom="@dimen/dimen_8dp"
         tools:listitem="@layout/item_content" />
@@ -19,7 +39,7 @@
         android:id="@+id/pbMovie"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:layout_centerInParent="true"/>
+        android:layout_centerInParent="true"
+        android:visibility="gone" />
 
 </RelativeLayout>
